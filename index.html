@@ -436,7 +436,7 @@
     <div class="drawer-body" id="cartItems"></div>
     <div class="drawer-foot">
       <div class="total"><span>Total</span><strong id="cartTotal">$0</strong></div>
-      <button class="btn btn-wa" id="checkout">Enviar pedido por WhatsApp</button>
+      <a class="btn btn-wa" id="checkout" href="#" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a>
       <small>Te confirmamos disponibilidad y forma de pago.</small>
     </div>
   </aside>
@@ -532,6 +532,7 @@
       $("cartCount").textContent = count;
       $("cartCount").dataset.empty = count === 0;
       $("cartTotal").textContent = money(cartTotal());
+      $("checkout").href = waLink(orderMessage());
       $("cartItems").innerHTML = ids.length === 0
         ? `<div class="empty">Tu pedido está vacío.<br><br><a href="#tienda" class="btn btn-outline" data-close>Ver tienda</a></div>`
         : ids.map(id => {
@@ -569,9 +570,16 @@
       $("overlay").classList.toggle("open", open);
     }
 
-    function openSocial(url, name) {
-      if (url) window.open(url, "_blank", "noopener");
-      else toast(`Pronto agregaremos nuestro ${name}`);
+    function orderMessage() {
+      const lines = Object.keys(cart).map(id => `• ${cart[id]} x ${byId(id).name} (${money(byId(id).price * cart[id])})`);
+      return `Hola Fiori, quiero hacer este pedido:\n${lines.join("\n")}\nTotal: ${money(cartTotal())}`;
+    }
+
+    // Los enlaces abren en otra pestaña; sin dirección configurada solo muestran un aviso
+    function setLinks(attr, url) {
+      document.querySelectorAll(`[${attr}]`).forEach(a => {
+        if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
+      });
     }
 
     document.addEventListener("click", e => {
@@ -595,9 +603,8 @@
       if (d.dec) { if (--cart[d.dec] <= 0) delete cart[d.dec]; renderCart(); }
       if (d.rm) { delete cart[d.rm]; renderCart(); }
       if ("close" in d) openCart(false);
-      if ("wa" in d) { e.preventDefault(); window.open(waLink("Hola Fiori, me interesa una de sus piezas ✿"), "_blank", "noopener"); }
-      if ("ig" in d) { e.preventDefault(); openSocial(INSTAGRAM, "Instagram"); }
-      if ("fb" in d) { e.preventDefault(); openSocial(FACEBOOK, "Facebook"); }
+      if ("ig" in d && !INSTAGRAM) { e.preventDefault(); toast("Pronto agregaremos nuestro Instagram"); }
+      if ("fb" in d && !FACEBOOK) { e.preventDefault(); toast("Pronto agregaremos nuestro Facebook"); }
     });
 
     $("openCart").onclick = () => openCart(true);
@@ -605,17 +612,16 @@
     $("overlay").onclick = () => openCart(false);
     document.addEventListener("keydown", e => e.key === "Escape" && openCart(false));
 
-    $("checkout").onclick = () => {
-      const ids = Object.keys(cart);
-      if (!ids.length) return toast("Agrega una pieza para continuar");
-      const lines = ids.map(id => `• ${cart[id]} x ${byId(id).name} (${money(byId(id).price * cart[id])})`);
-      const msg = `Hola Fiori, quiero hacer este pedido:\n${lines.join("\n")}\nTotal: ${money(cartTotal())}`;
-      window.open(waLink(msg), "_blank", "noopener");
+    $("checkout").onclick = e => {
+      if (!Object.keys(cart).length) { e.preventDefault(); toast("Agrega una pieza para continuar"); }
     };
 
     $("menuBtn").onclick = () => $("navLinks").classList.toggle("open");
     $("navLinks").onclick = e => e.target.closest("a") && $("navLinks").classList.remove("open");
 
+    setLinks("data-wa", waLink("Hola Fiori, me interesa una de sus piezas ✿"));
+    setLinks("data-ig", INSTAGRAM);
+    setLinks("data-fb", FACEBOOK);
     $("year").textContent = new Date().getFullYear();
     renderProducts();
     renderCart();
