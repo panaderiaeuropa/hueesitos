@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aurelia Joyería</title>
+  <title>Fiori Joyería</title>
   <meta name="description" content="Joyería artesanal en oro, plata y piedras naturales. Anillos, collares, aretes y pulseras hechos a mano.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -293,7 +293,7 @@
 
   <header>
     <div class="container nav">
-      <a href="#" class="logo">AURE<span>L</span>IA</a>
+      <a href="#" class="logo">FIOR<span>I</span></a>
       <nav class="nav-links" id="navLinks">
         <a href="#categorias">Colecciones</a>
         <a href="#tienda">Tienda</a>
@@ -418,7 +418,7 @@
         <div>
           <p class="eyebrow">Nuestra historia</p>
           <h2>Hecho a mano, pensado para durar</h2>
-          <p>Aurelia nació en un pequeño taller familiar con una idea sencilla: crear joyas honestas, bellas y con materiales que resistan el paso del tiempo.</p>
+          <p>Fiori nació en un pequeño taller familiar con una idea sencilla: crear joyas honestas, bellas y con materiales que resistan el paso del tiempo.</p>
           <p>Cada pieza se diseña, funde y pule a mano por nuestros orfebres. Trabajamos con metales reciclados y piedras de origen responsable.</p>
           <ul class="story-list">
             <li>Oro 14k y 18k, plata esterlina .925</li>
@@ -437,7 +437,7 @@
         <div class="section-head">
           <p class="eyebrow">Testimonios</p>
           <h2>Lo que dicen nuestros clientes</h2>
-          <p>Más de 8,000 personas ya llevan una pieza Aurelia.</p>
+          <p>Más de 8,000 personas ya llevan una pieza Fiori.</p>
         </div>
         <div class="t-grid">
           <div class="t-card">
@@ -476,7 +476,7 @@
             </li>
             <li>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
-              <div><strong>Correo</strong><span>hola@aurelia-joyeria.com</span></div>
+              <div><strong>Correo</strong><span>hola@fiori-joyeria.com</span></div>
             </li>
           </ul>
           <h3 style="font-size:1.4rem">Únete a nuestro boletín</h3>
@@ -515,7 +515,7 @@
     <div class="container">
       <div class="foot-grid">
         <div>
-          <a href="#" class="logo">AURE<span>L</span>IA</a>
+          <a href="#" class="logo">FIOR<span>I</span></a>
           <p>Joyería artesanal hecha con amor, metales nobles y piedras naturales.</p>
           <div class="socials">
             <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
@@ -532,12 +532,12 @@
           <ul><li><a href="#contacto">Envíos</a></li><li><a href="#contacto">Devoluciones</a></li><li><a href="#contacto">Guía de tallas</a></li><li><a href="#contacto">Cuidado de joyas</a></li></ul>
         </div>
         <div>
-          <h4>Aurelia</h4>
+          <h4>Fiori</h4>
           <ul><li><a href="#historia">Nosotros</a></li><li><a href="#contacto">Diseño a la medida</a></li><li><a href="#contacto">Contacto</a></li></ul>
         </div>
       </div>
       <div class="copy">
-        <span>© <span id="year"></span> Aurelia Joyería. Todos los derechos reservados.</span>
+        <span>© <span id="year"></span> Fiori Joyería. Todos los derechos reservados.</span>
         <span>Hecho a mano con ✦</span>
       </div>
     </div>
@@ -588,8 +588,8 @@
       set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} },
     };
 
-    let cart = store.get("aurelia-cart", {});
-    let favs = new Set(store.get("aurelia-favs", []));
+    let cart = store.get("fiori-cart", {});
+    let favs = new Set(store.get("fiori-favs", []));
     let filter = "todos";
 
     const $ = id => document.getElementById(id);
@@ -652,7 +652,7 @@
                 </div>
               </div>`;
           }).join("");
-      store.set("aurelia-cart", cart);
+      store.set("fiori-cart", cart);
     }
 
     function toast(msg) {
@@ -682,7 +682,7 @@
       if (d.fav) {
         const id = +d.fav;
         favs.has(id) ? favs.delete(id) : favs.add(id);
-        store.set("aurelia-favs", [...favs]);
+        store.set("fiori-favs", [...favs]);
         t.classList.toggle("on");
       }
       if (d.inc) { cart[d.inc]++; renderCart(); }
